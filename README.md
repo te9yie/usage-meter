@@ -13,8 +13,8 @@ ctx ████░░░░░░░░░░░░ 7%   5h ██████�
 Claude Codeで次を実行する。
 
 ```
-/plugin marketplace add te9yie/usage-meter
-/plugin install usage-meter@usage-meter
+/plugin marketplace add te9yie/claude-mods
+/plugin install usage-meter@te9yie
 ```
 
 ## 動き
