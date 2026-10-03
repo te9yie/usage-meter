@@ -57,12 +57,28 @@ const line = (ctx: Context | null, list: Window[], now: number) =>
     .filter(Boolean)
     .join('  ')
 
-const blocks = (p: number, mark?: number) => {
+// 塗り・トラック・目印を別々の色で描く（terminal用）。
+const blocks = (Text: any, p: number, mark?: number) => {
   const fill = Math.max(0, Math.min(WIDTH, Math.round((p / 100) * WIDTH)))
   const at = mark === undefined ? -1 : Math.min(WIDTH - 1, Math.floor(mark * WIDTH))
-  let out = ''
-  for (let i = 0; i < WIDTH; i++) out += i === at ? '┃' : i < fill ? '█' : '░'
-  return out
+  const run = (from: number, to: number, key: string) => {
+    const a = Math.max(from, 0)
+    const f = Math.max(0, Math.min(to, fill) - a)
+    const t = Math.max(0, to - a - f)
+    return [
+      f > 0 ? <Text key={key + 'f'} color={colorOf(p)}>{'█'.repeat(f)}</Text> : null,
+      t > 0 ? <Text key={key + 't'} color="#6a6a6a">{'░'.repeat(t)}</Text> : null,
+    ]
+  }
+  if (at < 0) return <Text>{run(0, WIDTH, 'a')}</Text>
+  return (
+    <Text>
+      {run(0, at, 'a')}
+      <Text color="#5b8def" bold>┃</Text>
+      {fill > at + 1 ? <Text color={colorOf(p)}>{'█'.repeat(Math.min(fill, WIDTH) - at - 1)}</Text> : null}
+      {WIDTH - Math.max(fill, at + 1) > 0 ? <Text color="#6a6a6a">{'░'.repeat(WIDTH - Math.max(fill, at + 1))}</Text> : null}
+    </Text>
+  )
 }
 
 // 丸角のパネルとバーをSVGで描く（terminal以外の描画先用）。
@@ -156,7 +172,7 @@ export const register: Register = on => {
           {items.map(it => (
             <Box key={it.key} gap={1}>
               <Text bold>{it.name}</Text>
-              <Text>{blocks(it.p, it.mark)}</Text>
+              {blocks(Text, it.p, it.mark)}
               <Text color={colorOf(it.p)}>{it.text}</Text>
             </Box>
           ))}
