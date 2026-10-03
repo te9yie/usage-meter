@@ -137,10 +137,10 @@ export const register: Register = on => {
   })
 
   on('ui.render', { component: 'AbovePrompt' }, async ($, e, next) => {
-    const list = await read($, windows)
-    const stored = await read($, context)
     // measure がまだ届いていない間は、その場で読み直す。
-    const ctx = stored ?? ctxOf((await $.session.usage()).context)
+    const u = await $.session.usage()
+    const list = (await read($, windows)).length ? await read($, windows) : pick(u.rateLimits)
+    const ctx = (await read($, context)) ?? ctxOf(u.context)
     if (e.props.hasSurvey || (list.length === 0 && !ctx)) return next(e)
 
     const now = await $.clock.now()
