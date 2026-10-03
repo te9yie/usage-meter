@@ -1,1 +1,9 @@
-{ "name": "usage-meter", "version": "0.1.0", "description": "5時間・週間のレート制限の使用量をプロンプトの上に表示する", "types": "./types/index.d.ts" }
+{
+  "name": "usage-meter",
+  "version": "0.1.0",
+  "description": "5時間・週間のレート制限の使用量をプロンプトの上に表示する",
+  "types": "./types/index.d.ts",
+  "author": {
+    "name": "te9yie"
+  }
+}

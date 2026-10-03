@@ -1,7 +1,19 @@
 {
   "name": "usage-meter",
-  "owner": { "name": "te9yie" },
+  "owner": {
+    "name": "te9yie"
+  },
   "plugins": [
-    { "name": "usage-meter", "source": "./", "description": "5時間・週間のレート制限の使用量をプロンプトの上に表示する" }
-  ]
+    {
+      "name": "usage-meter",
+      "source": "./",
+      "description": "5時間・週間のレート制限の使用量をプロンプトの上に表示する",
+      "author": {
+        "name": "te9yie"
+      }
+    }
+  ],
+  "metadata": {
+    "description": "Claude Codeの使用量メーターのmod"
+  }
 }
